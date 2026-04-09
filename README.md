@@ -17,7 +17,26 @@ Este proyecto es un sistema básico para gestionar una biblioteca. Está constru
 
 3. Acceder a la API en `http://localhost:8000`
 
-### Endpoints
+### Endpoints HTML
+- `GET /` → vista de inicio
+- `GET /login/` → iniciar sesión
+- `GET /logout/` → cerrar sesión
+- `GET /books/` → catálogo de libros
+- `GET /books/add/` → agregar libro
+- `GET /books/<id>/` → detalle de libro, préstamo y devolución
+- `GET /books/<id>/edit/` → editar libro
+- `GET /books/<id>/delete/` → eliminar libro
+- `GET /categories/` → catálogo de categorías
+- `GET /categories/add/` → agregar categoría
+- `GET /categories/<id>/edit/` → editar categoría
+- `GET /categories/<id>/delete/` → eliminar categoría
+
+### Imágenes
+- Los libros pueden tener una imagen opcional.
+- Las imágenes se guardan en `media/book_images/`.
+- Docker Compose monta `./media` en el contenedor para persistencia local.
+
+### Endpoints API
 - `GET /api/` → estado del servicio
 - `GET /api/books/` → lista de libros
 - `POST /api/books/` → añadir libro
@@ -29,6 +48,11 @@ Este proyecto es un sistema básico para gestionar una biblioteca. Está constru
 - Python 3.14+
 - `.venv` opcional para aislamiento
 
+Para acceder al sistema, crea un usuario con:
+```bash
+python manage.py createsuperuser
+```
+
 ### Ejecución local
 ```bash
 python -m venv .venv
@@ -36,6 +60,19 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver 0.0.0.0:8000
+```
+
+### Ejecución con Docker Compose
+Asegúrate de usar `compose` correctamente y no `ocmpose`.
+
+```bash
+docker compose up --build
+```
+
+Si quieres ejecutar en segundo plano:
+
+```bash
+docker compose up --build -d
 ```
 
 ## Notas

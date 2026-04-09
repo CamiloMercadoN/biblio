@@ -1,0 +1,51 @@
+{% extends 'library/base.html' %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1>{{ book.title }}</h1>
+        <p>{{ book.author }}</p>
+    </div>
+    <div>
+        <a class="button secondary" href="{% url 'book-edit-html' book.id %}">Editar</a>
+        <a class="button secondary" href="{% url 'book-delete-html' book.id %}">Eliminar</a>
+    </div>
+</div>
+
+<div class="book-card">
+    {% if book.image %}
+        <div class="book-image">
+            <img src="{{ book.image.url }}" alt="{{ book.title }}" />
+        </div>
+    {% endif %}
+    <div class="book-info">
+        <p><strong>Autor:</strong> {{ book.author }}</p>
+        <p><strong>Categoría:</strong> {{ book.category|default:"-" }}</p>
+        <p><strong>Disponible:</strong> {{ book.available|yesno:"Sí,No" }}</p>
+        <p><strong>Prestado a:</strong> {{ book.loaned_to|default:"-" }}</p>
+        <p><strong>Fecha de préstamo:</strong> {{ book.loan_date|date:"d/m/Y H:i"|default:"-" }}</p>
+    </div>
+</div>
+
+<div class="card action-card">
+    {% if book.available %}
+        <h2>Prestar libro</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label>Nombre del usuario</label>
+            <input type="text" name="user" required />
+            <button type="submit" name="action" value="loan">Prestar</button>
+        </form>
+    {% else %}
+        <h2>Devolver libro</h2>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="action" value="return">Devolver</button>
+        </form>
+    {% endif %}
+</div>
+
+<p><a class="button secondary" href="{% url 'book-list-html' %}">Volver al catálogo</a></p>
+{% endblock %}

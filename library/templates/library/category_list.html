@@ -1,0 +1,41 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Categorías{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1>Categorías</h1>
+        <p>Administra las categorías para los libros.</p>
+    </div>
+    <a class="button" href="{% url 'category-add-html' %}">Agregar categoría</a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Libros</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>{{ category.books.count }}</td>
+            <td class="actions-cell">
+                <a class="button secondary" href="{% url 'category-edit-html' category.id %}">Editar</a>
+                <a class="button secondary" href="{% url 'category-delete-html' category.id %}">Eliminar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No hay categorías registradas.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
