@@ -1,6 +1,6 @@
 # Biblio
 
-Biblio es una biblioteca digital sencilla construida con Django. Permite administrar libros, categorías e imágenes de forma local, con soporte para login y gestión desde una interfaz clara.
+Biblio es una biblioteca digital sencilla construida con Django. Permite administrar libros, categorías e imágenes de forma local, con soporte para inicio de sesión y gestión desde una interfaz clara.
 
 ## Qué hace
 - Muestra un catálogo de libros en la página de inicio
@@ -12,26 +12,26 @@ Biblio es una biblioteca digital sencilla construida con Django. Permite adminis
 
 ## Rutas importantes
 ### Interfaz HTML
-- `GET /` → catálago y vista de biblioteca
-- `GET /login/` → iniciar sesión
-- `GET /logout/` → cerrar sesión
-- `GET /books/` → lista de libros
-- `GET /books/add/` → agregar libro
-- `GET /books/<id>/` → detalle del libro
-- `GET /books/<id>/edit/` → editar libro
-- `GET /books/<id>/delete/` → eliminar libro
-- `GET /categories/` → lista de categorías
-- `GET /categories/add/` → agregar categoría
-- `GET /categories/<id>/edit/` → editar categoría
-- `GET /categories/<id>/delete/` → eliminar categoría
+- `GET /` → catálogo y vista de biblioteca
+- `GET /iniciar-sesion/` → iniciar sesión
+- `GET /cerrar-sesion/` → cerrar sesión
+- `GET /libros/` → lista de libros
+- `GET /libros/agregar/` → agregar libro
+- `GET /libros/<id>/` → detalle del libro
+- `GET /libros/<id>/editar/` → editar libro
+- `GET /libros/<id>/eliminar/` → eliminar libro
+- `GET /categorias/` → lista de categorías
+- `GET /categorias/agregar/` → agregar categoría
+- `GET /categorias/<id>/editar/` → editar categoría
+- `GET /categorias/<id>/eliminar/` → eliminar categoría
 
 ### Rutas para API
 - `GET /api/` → estado del servicio
-- `GET /api/books/` → lista de libros
-- `POST /api/books/` → crear libro
-- `GET /api/books/<id>/` → obtener libro
-- `POST /api/books/<id>/loan/` → prestar libro
-- `POST /api/books/<id>/return/` → devolver libro
+- `GET /api/libros/` → lista de libros
+- `POST /api/libros/` → crear libro
+- `GET /api/libros/<id>/` → obtener libro
+- `POST /api/libros/<id>/prestar/` → prestar libro
+- `POST /api/libros/<id>/devolver/` → devolver libro
 
 ## Cómo usar
 1. Crear y activar el entorno virtual:
@@ -64,4 +64,4 @@ docker compose up --build
 ## Notas de implementación
 - Las imágenes de libros se guardan en `media/book_images/`
 - `media/` está montado en el contenedor Docker para persistencia local
-- El proyecto usa `LOGIN_URL` y redirige al login después del logout
+- El proyecto usa `LOGIN_URL` y redirige a iniciar sesión después del cierre de sesión

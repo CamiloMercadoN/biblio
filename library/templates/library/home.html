@@ -9,24 +9,24 @@
         <h1>Explora libros desde Biblio</h1>
         <p class="hero-copy">Descubre los títulos disponibles, consulta categorías y administra la colección si estás autenticado.</p>
         <div class="home-actions">
-            <a class="button" href="{% url 'book-list-html' %}">Ver catálogo completo</a>
+            <a class="button" href="{% url 'libro-lista-html' %}">Ver catálogo completo</a>
             {% if user.is_authenticated %}
-                <a class="button" href="{% url 'book-add-html' %}">Agregar libro</a>
-                <a class="button secondary" href="{% url 'category-list-html' %}">Categorías</a>
-                <a class="button secondary" href="{% url 'category-add-html' %}">Agregar categoría</a>
+                <a class="button" href="{% url 'libro-agregar-html' %}">Agregar libro</a>
+                <a class="button secondary" href="{% url 'categoria-lista-html' %}">Categorías</a>
+                <a class="button secondary" href="{% url 'categoria-agregar-html' %}">Agregar categoría</a>
             {% else %}
-                <a class="button secondary" href="{% url 'login' %}">Iniciar sesión</a>
+                <a class="button secondary" href="{% url 'iniciar-sesion' %}">Iniciar sesión</a>
             {% endif %}
         </div>
     </div>
     <div class="hero-stats">
         <div class="metric-card">
             <p class="metric-label">Libros registrados</p>
-            <p class="metric-value">{{ book_count }}</p>
+            <p class="metric-value">{{ libro_count }}</p>
         </div>
         <div class="metric-card">
             <p class="metric-label">Categorías</p>
-            <p class="metric-value">{{ category_count }}</p>
+            <p class="metric-value">{{ categoria_count }}</p>
         </div>
     </div>
 </div>
@@ -38,7 +38,7 @@
             <p>Accede a los libros registrados en la biblioteca. Haz clic en cualquier título para ver detalles.</p>
         </div>
         <div class="category-pill-list">
-            {% for category in categories %}
+            {% for category in categorias %}
                 <span class="category-pill">{{ category.name }}</span>
             {% empty %}
                 <span class="category-pill">Sin categorías</span>
@@ -47,19 +47,19 @@
     </div>
 
     <div class="book-grid">
-        {% for book in books %}
+        {% for libro in libros %}
         <article class="book-card-public">
-            {% if book.image %}
-                <img src="{{ book.image.url }}" alt="{{ book.title }}" />
+            {% if libro.imagen %}
+                <img src="{{ libro.imagen.url }}" alt="{{ libro.titulo }}" />
             {% else %}
                 <div class="book-image placeholder">Sin imagen</div>
             {% endif %}
             <div class="book-card-body">
-                <p class="book-category">{{ book.category|default:"Sin categoría" }}</p>
-                <h3>{{ book.title }}</h3>
-                <p class="book-author">{{ book.author }}</p>
-                <p class="book-status {{ book.available|yesno:"available,unavailable" }}">{{ book.available|yesno:"Disponible,Prestado" }}</p>
-                <a class="button secondary" href="{% url 'book-detail-html' book.id %}">Ver detalle</a>
+                <p class="book-category">{{ libro.categoria|default:"Sin categoría" }}</p>
+                <h3>{{ libro.titulo }}</h3>
+                <p class="book-author">{{ libro.autor }}</p>
+                <p class="book-status {{ libro.disponible|yesno:"available,unavailable" }}">{{ libro.disponible|yesno:"Disponible,Prestado" }}</p>
+                <a class="button secondary" href="{% url 'libro-detalle-html' libro.id %}">Ver detalle</a>
             </div>
         </article>
         {% empty %}

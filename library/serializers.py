@@ -1,28 +1,28 @@
 from rest_framework import serializers
-from .models import Book
+from .models import Libro
 
 
-class BookSerializer(serializers.ModelSerializer):
-    category = serializers.StringRelatedField()
-    image_url = serializers.SerializerMethodField()
+class LibroSerializador(serializers.ModelSerializer):
+    categoria = serializers.StringRelatedField(source="categoria")
+    imagen_url = serializers.SerializerMethodField()
 
     class Meta:
-        model = Book
+        model = Libro
         fields = [
             "id",
-            "title",
-            "author",
-            "category",
-            "available",
-            "loaned_to",
-            "loan_date",
-            "image_url",
+            "titulo",
+            "autor",
+            "categoria",
+            "disponible",
+            "prestado_a",
+            "fecha_prestamo",
+            "imagen_url",
         ]
 
-    def get_image_url(self, obj):
+    def get_imagen_url(self, obj):
         request = self.context.get("request")
-        if obj.image:
+        if obj.imagen:
             if request is not None:
-                return request.build_absolute_uri(obj.image.url)
-            return obj.image.url
+                return request.build_absolute_uri(obj.imagen.url)
+            return obj.imagen.url
         return None

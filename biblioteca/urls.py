@@ -1,18 +1,18 @@
 """
-URL configuration for biblioteca project.
+Configuración de URLs para el proyecto biblioteca.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
+La lista `urlpatterns` enlaza rutas con vistas. Más información en:
     https://docs.djangoproject.com/en/6.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+Ejemplos:
+Vistas basadas en funciones
+    1. Importar la vista:  from my_app import views
+    2. Añadir una URL: path('', views.home, name='home')
+Vistas basadas en clases
+    1. Importar la vista:  from other_app.views import Home
+    2. Añadir una URL: path('', Home.as_view(), name='home')
+Incluir otro archivo de rutas
+    1. Importar include(): from django.urls import include, path
+    2. Añadir una URL: path('blog/', include('blog.urls'))
 """
 from django.conf import settings
 from django.conf.urls.static import static

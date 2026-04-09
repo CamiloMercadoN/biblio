@@ -9,8 +9,8 @@
         <p>Administra las categorías para los libros.</p>
     </div>
     <div>
-        <a class="button secondary" href="{% url 'home' %}">Volver al catálogo</a>
-        <a class="button" href="{% url 'category-add-html' %}">Agregar categoría</a>
+        <a class="button secondary" href="{% url 'inicio' %}">Volver al catálogo</a>
+        <a class="button" href="{% url 'categoria-agregar-html' %}">Agregar categoría</a>
     </div>
 </div>
 
@@ -24,14 +24,14 @@
         </tr>
     </thead>
     <tbody>
-        {% for category in categories %}
+        {% for category in categorias %}
         <tr>
             <td>{{ category.id }}</td>
-            <td>{{ category.name }}</td>
-            <td>{{ category.books.count }}</td>
+            <td>{{ category.nombre }}</td>
+            <td>{{ category.libros.count }}</td>
             <td class="actions-cell">
-                <a class="button secondary" href="{% url 'category-edit-html' category.id %}">Editar</a>
-                <a class="button secondary" href="{% url 'category-delete-html' category.id %}">Eliminar</a>
+                <a class="button secondary" href="{% url 'categoria-editar-html' category.id %}">Editar</a>
+                <a class="button secondary" href="{% url 'categoria-eliminar-html' category.id %}">Eliminar</a>
             </td>
         </tr>
         {% empty %}

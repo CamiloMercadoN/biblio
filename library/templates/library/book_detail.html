@@ -1,36 +1,36 @@
 {% extends 'library/base.html' %}
 
-{% block title %}{{ book.title }}{% endblock %}
+{% block title %}{{ book.titulo }}{% endblock %}
 
 {% block content %}
 <div class="page-header">
     <div>
-        <h1>{{ book.title }}</h1>
-        <p>{{ book.author }}</p>
+        <h1>{{ book.titulo }}</h1>
+        <p>{{ book.autor }}</p>
     </div>
     <div>
-        <a class="button secondary" href="{% url 'book-edit-html' book.id %}">Editar</a>
-        <a class="button secondary" href="{% url 'book-delete-html' book.id %}">Eliminar</a>
+        <a class="button secondary" href="{% url 'libro-editar-html' book.id %}">Editar</a>
+        <a class="button secondary" href="{% url 'libro-eliminar-html' book.id %}">Eliminar</a>
     </div>
 </div>
 
 <div class="book-card">
-    {% if book.image %}
+    {% if book.imagen %}
         <div class="book-image">
-            <img src="{{ book.image.url }}" alt="{{ book.title }}" />
+            <img src="{{ book.imagen.url }}" alt="{{ book.titulo }}" />
         </div>
     {% endif %}
     <div class="book-info">
-        <p><strong>Autor:</strong> {{ book.author }}</p>
-        <p><strong>Categoría:</strong> {{ book.category|default:"-" }}</p>
-        <p><strong>Disponible:</strong> {{ book.available|yesno:"Sí,No" }}</p>
-        <p><strong>Prestado a:</strong> {{ book.loaned_to|default:"-" }}</p>
-        <p><strong>Fecha de préstamo:</strong> {{ book.loan_date|date:"d/m/Y H:i"|default:"-" }}</p>
+        <p><strong>Autor:</strong> {{ book.autor }}</p>
+        <p><strong>Categoría:</strong> {{ book.categoria|default:"-" }}</p>
+        <p><strong>Disponible:</strong> {{ book.disponible|yesno:"Sí,No" }}</p>
+        <p><strong>Prestado a:</strong> {{ book.prestado_a|default:"-" }}</p>
+        <p><strong>Fecha de préstamo:</strong> {{ book.fecha_prestamo|date:"d/m/Y H:i"|default:"-" }}</p>
     </div>
 </div>
 
 <div class="card action-card">
-    {% if book.available %}
+    {% if book.disponible %}
         <h2>Prestar libro</h2>
         <form method="post">
             {% csrf_token %}
@@ -47,5 +47,5 @@
     {% endif %}
 </div>
 
-<p><a class="button secondary" href="{% url 'book-list-html' %}">Volver al catálogo</a></p>
+<p><a class="button secondary" href="{% url 'libro-lista-html' %}">Volver al catálogo</a></p>
 {% endblock %}

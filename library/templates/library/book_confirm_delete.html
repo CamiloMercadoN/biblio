@@ -8,6 +8,6 @@
 <form method="post">
     {% csrf_token %}
     <button type="submit">Sí, eliminar</button>
-    <a class="button secondary" href="{% url 'book-detail-html' object.pk %}">Cancelar</a>
+    <a class="button secondary" href="{% url 'libro-detalle-html' object.pk %}">Cancelar</a>
 </form>
 {% endblock %}

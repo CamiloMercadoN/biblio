@@ -1,16 +1,16 @@
 from django.urls import path
 from .views import (
-    HealthView,
-    BookListCreateAPIView,
-    BookRetrieveAPIView,
-    LoanBookAPIView,
-    ReturnBookAPIView,
+    EstadoAPIView,
+    LibroDetalleAPIView,
+    LibroListaCrearAPIView,
+    PrestamoLibroAPIView,
+    DevolucionLibroAPIView,
 )
 
 urlpatterns = [
-    path("", HealthView.as_view(), name="api-health"),
-    path("books/", BookListCreateAPIView.as_view(), name="api-book-list-create"),
-    path("books/<int:pk>/", BookRetrieveAPIView.as_view(), name="api-book-detail"),
-    path("books/<int:pk>/loan/", LoanBookAPIView.as_view(), name="api-book-loan"),
-    path("books/<int:pk>/return/", ReturnBookAPIView.as_view(), name="api-book-return"),
+    path("", EstadoAPIView.as_view(), name="api-salud"),
+    path("libros/", LibroListaCrearAPIView.as_view(), name="api-libro-lista"),
+    path("libros/<int:pk>/", LibroDetalleAPIView.as_view(), name="api-libro-detalle"),
+    path("libros/<int:pk>/prestar/", PrestamoLibroAPIView.as_view(), name="api-libro-prestar"),
+    path("libros/<int:pk>/devolver/", DevolucionLibroAPIView.as_view(), name="api-libro-devolver"),
 ]

@@ -8,36 +8,36 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .forms import BookForm, CategoryForm
-from .models import Book, Category
-from .serializers import BookSerializer
+from .forms import CategoriaFormulario, LibroFormulario
+from .models import Libro, Categoria
+from .serializers import LibroSerializador
 
 
-class HomeView(TemplateView):
+class InicioVista(TemplateView):
     template_name = "library/home.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["book_count"] = Book.objects.count()
-        context["category_count"] = Category.objects.count()
-        context["books"] = Book.objects.all().order_by("title")[:12]
-        context["categories"] = Category.objects.all()
+        context["libro_count"] = Libro.objects.count()
+        context["categoria_count"] = Categoria.objects.count()
+        context["libros"] = Libro.objects.all().order_by("titulo")[:12]
+        context["categorias"] = Categoria.objects.all()
         return context
 
 
-class BookListView(LoginRequiredMixin, ListView):
-    model = Book
+class LibroListaVista(LoginRequiredMixin, ListView):
+    model = Libro
     template_name = "library/book_list.html"
-    context_object_name = "books"
-    login_url = "login"
+    context_object_name = "libros"
+    login_url = "iniciar-sesion"
 
 
-class BookCreateView(LoginRequiredMixin, CreateView):
-    model = Book
-    form_class = BookForm
+class LibroCrearVista(LoginRequiredMixin, CreateView):
+    model = Libro
+    form_class = LibroFormulario
     template_name = "library/book_form.html"
-    success_url = reverse_lazy("book-list-html")
-    login_url = "login"
+    success_url = reverse_lazy("libro-lista-html")
+    login_url = "iniciar-sesion"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -45,11 +45,11 @@ class BookCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class BookDetailView(LoginRequiredMixin, DetailView):
-    model = Book
+class LibroDetalleVista(LoginRequiredMixin, DetailView):
+    model = Libro
     template_name = "library/book_detail.html"
     context_object_name = "book"
-    login_url = "login"
+    login_url = "iniciar-sesion"
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -58,25 +58,25 @@ class BookDetailView(LoginRequiredMixin, DetailView):
         if action == "loan":
             user = request.POST.get("user")
             if user:
-                self.object.available = False
-                self.object.loaned_to = user
-                self.object.loan_date = timezone.now()
+                self.object.disponible = False
+                self.object.prestado_a = user
+                self.object.fecha_prestamo = timezone.now()
                 self.object.save()
         elif action == "return":
-            self.object.available = True
-            self.object.loaned_to = None
-            self.object.loan_date = None
+            self.object.disponible = True
+            self.object.prestado_a = None
+            self.object.fecha_prestamo = None
             self.object.save()
 
-        return redirect("book-detail-html", pk=self.object.pk)
+        return redirect("libro-detalle-html", pk=self.object.pk)
 
 
-class BookUpdateView(LoginRequiredMixin, UpdateView):
-    model = Book
-    form_class = BookForm
+class LibroEditarVista(LoginRequiredMixin, UpdateView):
+    model = Libro
+    form_class = LibroFormulario
     template_name = "library/book_form.html"
-    success_url = reverse_lazy("book-list-html")
-    login_url = "login"
+    success_url = reverse_lazy("libro-lista-html")
+    login_url = "iniciar-sesion"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -84,88 +84,88 @@ class BookUpdateView(LoginRequiredMixin, UpdateView):
         return context
 
 
-class BookDeleteView(LoginRequiredMixin, DeleteView):
-    model = Book
+class LibroEliminarVista(LoginRequiredMixin, DeleteView):
+    model = Libro
     template_name = "library/book_confirm_delete.html"
-    success_url = reverse_lazy("book-list-html")
-    login_url = "login"
+    success_url = reverse_lazy("libro-lista-html")
+    login_url = "iniciar-sesion"
 
 
 def cerrar_sesion(request):
     logout(request)
-    return redirect("login")
+    return redirect("iniciar-sesion")
 
 
-class CategoryListView(LoginRequiredMixin, ListView):
-    model = Category
+class CategoriaListaVista(LoginRequiredMixin, ListView):
+    model = Categoria
     template_name = "library/category_list.html"
-    context_object_name = "categories"
-    login_url = "login"
+    context_object_name = "categorias"
+    login_url = "iniciar-sesion"
 
 
-class CategoryCreateView(LoginRequiredMixin, CreateView):
-    model = Category
-    form_class = CategoryForm
+class CategoriaCrearVista(LoginRequiredMixin, CreateView):
+    model = Categoria
+    form_class = CategoriaFormulario
     template_name = "library/category_form.html"
-    success_url = reverse_lazy("category-list-html")
-    login_url = "login"
+    success_url = reverse_lazy("categoria-lista-html")
+    login_url = "iniciar-sesion"
 
 
-class CategoryUpdateView(LoginRequiredMixin, UpdateView):
-    model = Category
-    form_class = CategoryForm
+class CategoriaEditarVista(LoginRequiredMixin, UpdateView):
+    model = Categoria
+    form_class = CategoriaFormulario
     template_name = "library/category_form.html"
-    success_url = reverse_lazy("category-list-html")
-    login_url = "login"
+    success_url = reverse_lazy("categoria-lista-html")
+    login_url = "iniciar-sesion"
 
 
-class CategoryDeleteView(LoginRequiredMixin, DeleteView):
-    model = Category
+class CategoriaEliminarVista(LoginRequiredMixin, DeleteView):
+    model = Categoria
     template_name = "library/category_confirm_delete.html"
-    success_url = reverse_lazy("category-list-html")
-    login_url = "login"
+    success_url = reverse_lazy("categoria-lista-html")
+    login_url = "iniciar-sesion"
 
 
-class HealthView(APIView):
+class EstadoAPIView(APIView):
     def get(self, request):
-        return Response({"message": "Biblioteca DRF lista", "books": Book.objects.count()})
+        return Response({"message": "Biblioteca DRF lista", "libros": Libro.objects.count()})
 
 
-class BookListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Book.objects.all().order_by("id")
-    serializer_class = BookSerializer
+class LibroListaCrearAPIView(generics.ListCreateAPIView):
+    queryset = Libro.objects.all().order_by("id")
+    serializer_class = LibroSerializador
 
 
-class BookRetrieveAPIView(generics.RetrieveAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
+class LibroDetalleAPIView(generics.RetrieveAPIView):
+    queryset = Libro.objects.all()
+    serializer_class = LibroSerializador
 
 
-class LoanBookAPIView(APIView):
+class PrestamoLibroAPIView(APIView):
     def post(self, request, pk):
-        book = get_object_or_404(Book, pk=pk)
-        if not book.available:
+        libro = get_object_or_404(Libro, pk=pk)
+        if not libro.disponible:
             return Response({"detail": "El libro ya está prestado."}, status=status.HTTP_400_BAD_REQUEST)
 
-        user = request.data.get("user")
-        if not user:
+        usuario = request.data.get("user")
+        if not usuario:
             return Response({"detail": "Se requiere el campo 'user'."}, status=status.HTTP_400_BAD_REQUEST)
 
-        book.available = False
-        book.loaned_to = user
-        book.loan_date = timezone.now()
-        book.save()
-        return Response(BookSerializer(book).data)
+        libro.disponible = False
+        libro.prestado_a = usuario
+        libro.fecha_prestamo = timezone.now()
+        libro.save()
+        return Response(LibroSerializador(libro).data)
 
 
-class ReturnBookAPIView(APIView):
+class DevolucionLibroAPIView(APIView):
     def post(self, request, pk):
-        book = get_object_or_404(Book, pk=pk)
-        if book.available:
+        libro = get_object_or_404(Libro, pk=pk)
+        if libro.disponible:
             return Response({"detail": "El libro no está prestado."}, status=status.HTTP_400_BAD_REQUEST)
 
-        book.available = True
-        book.loaned_to = None
-        book.loan_date = None
-        book.save()
-        return Response(BookSerializer(book).data)
+        libro.disponible = True
+        libro.prestado_a = None
+        libro.fecha_prestamo = None
+        libro.save()
+        return Response(LibroSerializador(libro).data)
