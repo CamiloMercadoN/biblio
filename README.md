@@ -1,80 +1,67 @@
-# Biblioteca Simple
+# Biblio
 
-Este proyecto es un sistema básico para gestionar una biblioteca. Está construido con Django REST Framework y está preparado para ejecutarse dentro de Docker.
+Biblio es una biblioteca digital sencilla construida con Django. Permite administrar libros, categorías e imágenes de forma local, con soporte para login y gestión desde una interfaz clara.
 
-## Instrucciones
+## Qué hace
+- Muestra un catálogo de libros en la página de inicio
+- Permite crear, editar y eliminar libros
+- Permite crear, editar y eliminar categorías
+- Genera imágenes opcionales para cada libro
+- Mantiene los archivos de imagen en `media/book_images/`
+- Usa SQLite para guardar los datos
 
-### Con Docker
-1. Construir la imagen Docker:
-   ```bash
-   docker build -t biblioteca-simple .
-   ```
-
-2. Ejecutar el contenedor:
-   ```bash
-   docker run -p 8000:8000 biblioteca-simple
-   ```
-
-3. Acceder a la API en `http://localhost:8000`
-
-### Endpoints HTML
-- `GET /` → vista de inicio
+## Rutas importantes
+### Interfaz HTML
+- `GET /` → catálago y vista de biblioteca
 - `GET /login/` → iniciar sesión
 - `GET /logout/` → cerrar sesión
-- `GET /books/` → catálogo de libros
+- `GET /books/` → lista de libros
 - `GET /books/add/` → agregar libro
-- `GET /books/<id>/` → detalle de libro, préstamo y devolución
+- `GET /books/<id>/` → detalle del libro
 - `GET /books/<id>/edit/` → editar libro
 - `GET /books/<id>/delete/` → eliminar libro
-- `GET /categories/` → catálogo de categorías
+- `GET /categories/` → lista de categorías
 - `GET /categories/add/` → agregar categoría
 - `GET /categories/<id>/edit/` → editar categoría
 - `GET /categories/<id>/delete/` → eliminar categoría
 
-### Imágenes
-- Los libros pueden tener una imagen opcional.
-- Las imágenes se guardan en `media/book_images/`.
-- Docker Compose monta `./media` en el contenedor para persistencia local.
-
-### Endpoints API
+### Rutas para API
 - `GET /api/` → estado del servicio
 - `GET /api/books/` → lista de libros
-- `POST /api/books/` → añadir libro
-- `GET /api/books/<id>/` → obtener libro por id
+- `POST /api/books/` → crear libro
+- `GET /api/books/<id>/` → obtener libro
 - `POST /api/books/<id>/loan/` → prestar libro
 - `POST /api/books/<id>/return/` → devolver libro
 
-### Requisitos locales
-- Python 3.14+
-- `.venv` opcional para aislamiento
+## Cómo usar
+1. Crear y activar el entorno virtual:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate
+   ```
+2. Instalar dependencias:
+   ```bash
+   python -m pip install -r requirements.txt
+   ```
+3. Aplicar migraciones:
+   ```bash
+   python manage.py migrate
+   ```
+4. Crear un usuario administrativo:
+   ```bash
+   python manage.py createsuperuser
+   ```
+5. Ejecutar el servidor:
+   ```bash
+   python manage.py runserver 0.0.0.0:8000
+   ```
 
-Para acceder al sistema, crea un usuario con:
-```bash
-python manage.py createsuperuser
-```
-
-### Ejecución local
-```bash
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver 0.0.0.0:8000
-```
-
-### Ejecución con Docker Compose
-Asegúrate de usar `compose` correctamente y no `ocmpose`.
-
+## Uso con Docker Compose
 ```bash
 docker compose up --build
 ```
 
-Si quieres ejecutar en segundo plano:
-
-```bash
-docker compose up --build -d
-```
-
-## Notas
-
-La API usa SQLite para persistencia local y Django REST Framework para la capa de serialización y vistas.
+## Notas de implementación
+- Las imágenes de libros se guardan en `media/book_images/`
+- `media/` está montado en el contenedor Docker para persistencia local
+- El proyecto usa `LOGIN_URL` y redirige al login después del logout

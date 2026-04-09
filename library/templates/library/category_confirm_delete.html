@@ -5,9 +5,12 @@
 {% block content %}
 <h1>Eliminar categoría</h1>
 <p>¿Seguro que deseas eliminar la categoría "{{ object.name }}"?</p>
-<form method="post">
+<form method="post" class="card form-card">
     {% csrf_token %}
-    <button type="submit">Sí, eliminar</button>
-    <a class="button secondary" href="{% url 'category-list-html' %}">Cancelar</a>
+    <p>Esta acción no se puede deshacer.</p>
+    <div class="form-actions">
+        <button type="submit">Sí, eliminar</button>
+        <a class="button secondary" href="{% url 'category-list-html' %}">Volver</a>
+    </div>
 </form>
 {% endblock %}

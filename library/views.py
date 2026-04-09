@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -18,6 +19,9 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["book_count"] = Book.objects.count()
+        context["category_count"] = Category.objects.count()
+        context["books"] = Book.objects.all().order_by("title")[:12]
+        context["categories"] = Category.objects.all()
         return context
 
 
@@ -85,6 +89,11 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "library/book_confirm_delete.html"
     success_url = reverse_lazy("book-list-html")
     login_url = "login"
+
+
+def cerrar_sesion(request):
+    logout(request)
+    return redirect("login")
 
 
 class CategoryListView(LoginRequiredMixin, ListView):
