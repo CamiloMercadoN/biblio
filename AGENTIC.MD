@@ -1,24 +1,25 @@
 # AGENTIC
 
 ## Objetivo general
-Desarrollar un sistema simple para bibliotecas que permita registrar libros, listar el catálogo, gestionar préstamos y devoluciones, y ejecutar la aplicación de forma containerizada con Docker.
+Desarrollar un sistema simple para bibliotecas usando Django REST Framework que permita registrar libros, listar el catálogo, gestionar préstamos y devoluciones, y ejecutar la aplicación dentro de Docker.
 
 ## Alcance inicial (MVP)
 - Registro de libros con título, autor y estado de disponibilidad.
 - Listado de todos los libros.
 - Préstamo de libros a un usuario.
 - Devolución de libros.
-- Interfaz REST simple para consumo desde frontend o pruebas.
+- API REST con Django REST Framework.
+- Persistencia local con SQLite.
 - Ejecución en Docker para desarrollo y despliegue local.
 
 ## Requisitos principales
-- Lenguaje: Python 3 con Flask para una API ligera.
-- Persistencia inicial: almacenamiento en memoria para la primera versión.
-- Contenedor Docker que permita desplegar la aplicación con un solo comando.
+- Lenguaje: Python 3 con Django y Django REST Framework.
+- Persistencia inicial: SQLite.
+- Contenedor Docker que permita arrancar la aplicación con un solo comando.
 - Repositorio Git con commits claros y `.gitignore` apropiado.
 
 ## Funcionalidades del sistema
-1. Vista de bienvenida y estado del servicio.
+1. Vista de estado del servicio.
 2. Endpoint para listar libros.
 3. Endpoint para crear nuevos libros.
 4. Endpoint para consultar un libro por ID.
@@ -33,13 +34,15 @@ Desarrollar un sistema simple para bibliotecas que permita registrar libros, lis
 - Como desarrollador, quiero ejecutar la aplicación dentro de un contenedor Docker.
 
 ## Arquitectura propuesta
-- Backend: API REST con Flask.
-- Datos: almacenamiento en memoria con una lista de libros durante el desarrollo.
+- Backend: API REST con Django y Django REST Framework.
+- Datos: SQLite para persistencia local.
 - Contenerización: `Dockerfile` sencillo para empaquetar la aplicación.
-- Escalado futuro: migración a base de datos SQLite o PostgreSQL si se requiere persistencia.
+- Escalado futuro: migración a otra base de datos y autenticación.
 
 ## Estructura del proyecto
-- `app.py`: aplicación Flask principal.
+- `manage.py`: comando de gestión de Django.
+- `biblioteca/`: configuración del proyecto Django.
+- `library/`: aplicación Django con el API de libros.
 - `requirements.txt`: dependencias de Python.
 - `Dockerfile`: define la imagen Docker.
 - `.dockerignore`: archivos excluidos de la imagen Docker.
@@ -48,25 +51,18 @@ Desarrollar un sistema simple para bibliotecas que permita registrar libros, lis
 
 ## Dockerización
 - Construir la imagen local con `docker build -t biblioteca-simple .`
-- Ejecutar el contenedor con `docker run -p 5000:5000 biblioteca-simple`
-- La API quedará disponible en `http://localhost:5000`
-
-## Flujo Git inicial
-1. `git init`
-2. Crear `main` con los archivos base.
-3. Añadir `.gitignore` y `Dockerfile`.
-4. Hacer commit con mensaje claro: "Init simple library system with Docker config".
+- Ejecutar el contenedor con `docker run -p 8000:8000 biblioteca-simple`
+- La API quedará disponible en `http://localhost:8000`
 
 ## Fases de desarrollo
 1. Preparar el repositorio y la estructura base.
-2. Implementar API básica en Flask.
+2. Implementar la API con Django REST Framework.
 3. Añadir Dockerfile y `.dockerignore`.
 4. Probar localmente y en contenedor.
 5. Documentar el uso en `README.md`.
 
 ## Extensiones futuras
-- Persistencia con base de datos.
-- Autenticación de usuarios.
-- Frontend web con HTML/CSS/JS o React.
+- Autenticación y permisos.
+- Interfaz web o dashboard React.
 - Búsqueda y filtrado de libros.
-- Gestión de categorías y reservas.
+- Gestión de usuarios y reservas.

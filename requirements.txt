@@ -1,1 +1,2 @@
-Flask==2.4.0
+Django==6.0.3
+djangorestframework==3.17.1

@@ -1,9 +1,10 @@
 # Biblioteca Simple
 
-Este proyecto es un sistema básico para gestionar una biblioteca. Está construido con Python y Flask y está preparado para ejecutarse dentro de Docker.
+Este proyecto es un sistema básico para gestionar una biblioteca. Está construido con Django REST Framework y está preparado para ejecutarse dentro de Docker.
 
 ## Instrucciones
 
+### Con Docker
 1. Construir la imagen Docker:
    ```bash
    docker build -t biblioteca-simple .
@@ -11,20 +12,32 @@ Este proyecto es un sistema básico para gestionar una biblioteca. Está constru
 
 2. Ejecutar el contenedor:
    ```bash
-   docker run -p 5000:5000 biblioteca-simple
+   docker run -p 8000:8000 biblioteca-simple
    ```
 
-3. Probar la API:
-   - `GET /` → estado del servicio
-   - `GET /books` → lista de libros
-   - `POST /books` → añadir libro
-   - `POST /books/<id>/loan` → prestar libro
-   - `POST /books/<id>/return` → devolver libro
+3. Acceder a la API en `http://localhost:8000`
 
-## Dependencias
+### Endpoints
+- `GET /api/` → estado del servicio
+- `GET /api/books/` → lista de libros
+- `POST /api/books/` → añadir libro
+- `GET /api/books/<id>/` → obtener libro por id
+- `POST /api/books/<id>/loan/` → prestar libro
+- `POST /api/books/<id>/return/` → devolver libro
 
-- Flask
+### Requisitos locales
+- Python 3.14+
+- `.venv` opcional para aislamiento
+
+### Ejecución local
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver 0.0.0.0:8000
+```
 
 ## Notas
 
-Este repositorio es un punto de partida para un sistema de bibliotecas sencillo. Para producción, se recomienda añadir persistencia en base de datos y autenticación.
+La API usa SQLite para persistencia local y Django REST Framework para la capa de serialización y vistas.
