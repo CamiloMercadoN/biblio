@@ -1,0 +1,48 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Catálogo de libros{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1>Catálogo de libros</h1>
+        <p>Administra el inventario de la biblioteca.</p>
+    </div>
+    <a class="button" href="{% url 'libro-agregar-html' %}">Agregar libro</a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Categoría</th>
+            <th>Disponible</th>
+            <th>Prestado a</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in libros %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.titulo }}</td>
+            <td>{{ book.autor }}</td>
+            <td>{{ book.categoria|default:'-' }}</td>
+            <td>{{ book.disponible|yesno:"Sí,No" }}</td>
+            <td>{{ book.prestado_a|default:"-" }}</td>
+            <td class="actions-cell">
+                <a class="button secondary" href="{% url 'libro-detalle-html' book.id %}">Ver</a>
+                <a class="button secondary" href="{% url 'libro-editar-html' book.id %}">Editar</a>
+                <a class="button secondary" href="{% url 'libro-eliminar-html' book.id %}">Eliminar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No hay libros registrados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

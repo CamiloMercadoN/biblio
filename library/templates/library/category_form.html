@@ -1,0 +1,15 @@
+{% extends 'library/base.html' %}
+
+{% block title %}{{ view.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ view.title }}</h1>
+<form method="post" class="card form-card">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-actions">
+        <button type="submit">Guardar</button>
+        <a class="button secondary" href="{% url 'categoria-lista-html' %}">Volver</a>
+    </div>
+</form>
+{% endblock %}

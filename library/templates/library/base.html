@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Biblioteca{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'library/style.css' %}" />
+</head>
+<body>
+    <div class="app-shell">
+        <header class="app-header">
+            <div>
+                <a class="brand" href="{% url 'inicio' %}">Biblio</a>
+            </div>
+            <nav>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'inicio' %}">Inicio</a>
+                    <a href="{% url 'libro-lista-html' %}">Libros</a>
+                    <a href="{% url 'categoria-lista-html' %}">Categorías</a>
+                    <a href="{% url 'cerrar-sesion' %}">Cerrar sesión</a>
+                {% else %}
+                    <a href="{% url 'iniciar-sesion' %}">Iniciar sesión</a>
+                {% endif %}
+            </nav>
+        </header>
+
+        <main class="app-content">
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="message {{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="app-footer">
+            <p>© Biblio - Grupo 8 APTC106.202605.2350 - Óscar Castillo - Camilo Mercado - Valeria Pozo - Bruno Veloso </p>
+        </footer>
+    </div>
+</body>
+</html>
