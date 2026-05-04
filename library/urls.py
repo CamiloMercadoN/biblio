@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
+=======
+from django.contrib.auth import views as auth_views
+from django.urls import path
+>>>>>>> upstream/main
 from .views import (
     CategoriaCrearVista,
     CategoriaEliminarVista,
@@ -29,9 +34,13 @@ urlpatterns = [
     path("categorias/agregar/", CategoriaCrearVista.as_view(), name="categoria-agregar-html"),
     path("categorias/<int:pk>/editar/", CategoriaEditarVista.as_view(), name="categoria-editar-html"),
     path("categorias/<int:pk>/eliminar/", CategoriaEliminarVista.as_view(), name="categoria-eliminar-html"),
+<<<<<<< HEAD
 
     path("api/", include("library.api_urls"))
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+=======
+]
+>>>>>>> upstream/main
